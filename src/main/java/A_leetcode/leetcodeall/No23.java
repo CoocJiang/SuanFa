@@ -23,7 +23,7 @@ public class No23 {
 
         ListNode [] listNodes = {list1,list2,list3};
 
-        System.out.println(mergeKLists(listNodes));
+        System.out.println(mergeKLists1(listNodes));
     }
 
      static   public class ListNode {
@@ -39,12 +39,7 @@ public class No23 {
              return null;
          }
          //建立小根堆
-        PriorityQueue<ListNode> minHeap = new PriorityQueue<>(new Comparator<ListNode>() {
-            @Override
-            public int compare(ListNode o1, ListNode o2) {
-                return o1.val-o2.val;
-            }
-        });
+        PriorityQueue<ListNode> minHeap = new PriorityQueue<>((o1, o2) -> o1.val-o2.val);
 
         for (ListNode node:lists){
             if (node==null){
@@ -69,6 +64,24 @@ public class No23 {
            }
         }
          return head;
+    }
+
+    public static ListNode mergeKLists1(ListNode[] lists) {
+        PriorityQueue<ListNode> minHeap = new PriorityQueue<>((o1, o2) -> o1.val-o2.val);
+        for (ListNode node:lists){
+            while (node!=null){
+                minHeap.add(node);
+                node = node.next;
+            }
+        }
+        ListNode result = new ListNode();
+        ListNode head = result;
+        while (!minHeap.isEmpty()){
+            result.next = minHeap.poll();
+            result=result.next;
+        }
+        result.next = null;
+        return head.next;
     }
 
 

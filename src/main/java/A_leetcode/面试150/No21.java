@@ -26,7 +26,7 @@ public class No21 {
         l2.next = new ListNode(3);
         l2.next.next = new ListNode(4);
 
-        mergeTwoLists(l1,l2);
+        mergeTwoLists3(l1,l2);
     }
 
 
@@ -114,6 +114,44 @@ public class No21 {
                 head.next= list1;
                 break;
             }
+        }
+        return result;
+    }
+
+
+    public static ListNode mergeTwoLists3(ListNode list1, ListNode list2) {
+        ListNode f1 = list1;
+        ListNode f2 = list2;
+        if (f1==null){
+            return f2;
+        }
+        if (f2==null){
+            return f1;
+        }
+        ListNode ans;
+        if (f1.val>f2.val){
+            ans = f2;
+            f2 = f2.next;
+        }else {
+            ans = f1;
+            f1 = f1.next;
+        }
+        ListNode result = ans;
+
+        while(f1!=null&&f2!=null){
+            if (f1.val>f2.val){
+                ans.next = f2;
+                f2 = f2.next;
+            }else {
+                ans.next = f1;
+                f1 = f1.next;
+            }
+            ans = ans.next;
+        }
+        if (f1==null){
+            ans.next = f2;
+        }else {
+            ans.next = f1;
         }
         return result;
     }

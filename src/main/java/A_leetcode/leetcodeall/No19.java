@@ -21,7 +21,7 @@ public class No19 {
 //        node.next = new ListNode(4);
 //        node = node.next;
 //        node.next = new ListNode(5);
-        removeNthFromEnd(node,1);
+        removeNthFromEnd1(node,1);
     }
     public static ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode fakehead = new ListNode();
@@ -37,5 +37,22 @@ public class No19 {
         }
         p2.next = p2.next.next;
         return fakehead.next;
+    }
+
+
+    public static ListNode removeNthFromEnd1(ListNode head, int n) {
+        ListNode result = new ListNode(0, head);
+        ListNode fast = result;
+        ListNode slow = result;
+        while (n>0){
+            fast = fast.next;
+            n--;
+        }
+        while (fast.next!=null){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return result.next;
     }
 }

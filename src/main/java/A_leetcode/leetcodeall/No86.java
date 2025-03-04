@@ -31,4 +31,28 @@ public class No86 {
         p.next = da.next;
         return xiao.next;
     }
+
+    public static void main(String[] args) {
+
+    }
+
+    public static ListNode partition2(ListNode head, int x) {
+        ListNode gt = new ListNode();
+        ListNode lt = new ListNode();
+        ListNode p = gt;
+        ListNode q = lt;
+        while (head!=null){
+            if (head.val<x){
+                lt.next = head;
+                lt = lt.next;
+            }else {
+                gt.next = head;
+                gt = gt.next;
+            }
+            head = head.next;
+        }
+        gt.next = null;
+        lt.next = p.next;
+        return q.next;
+    }
 }
