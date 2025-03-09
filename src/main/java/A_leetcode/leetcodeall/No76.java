@@ -1,11 +1,10 @@
 package A_leetcode.leetcodeall;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class No76 {
     public static void main(String[] args) {
-        System.out.println(minWindow1("ADOBECODEBANC", "ABC"));
+        System.out.println(minWindow2("ADOBECODEBANC", "ABC"));
     }
     public static String minWindow1(String s, String t) {
         if (t.length()>s.length()){
@@ -59,7 +58,6 @@ public class No76 {
             return "";
         }
     }
-
     public static String minWindow(String s, String t) {
         if (t.length()>s.length()){
             return "";
@@ -100,5 +98,36 @@ public class No76 {
             return "";
         }
     }
+
+    public static String minWindow2(String s, String t) {
+        String result = "";
+        int[] chars = new int[26];
+        int right = 0;
+        int left = 0;
+        int length = s.length();
+        int cnts = t.length();
+        char[] charArray = s.toCharArray();
+        for (char c : t.toCharArray()) {
+            chars[c - 'A']++;
+        }
+        while (right < length) {
+            if (chars[charArray[right] - 'A'] > 0) {
+                cnts--;
+            }
+            chars[charArray[right] - 'A']--;
+            right++;
+            if (cnts <= 0) {
+                while (chars[charArray[left] - 'A'] < 0) {
+                    chars[charArray[left] - 'A']++;
+                    left++;
+                }
+                if (result.equals("")||(right-left)<result.length()) {
+                    result = s.substring(left,right);
+                }
+            }
+        }
+        return result;
+    }
+
 }
 

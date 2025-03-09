@@ -14,14 +14,14 @@ public class No19 {
 
     public static void main(String[] args) {
         ListNode node = new ListNode(1);
-//        node.next = new ListNode(2);
-//        node = node.next;
-//        node.next = new ListNode(3);
-//        node = node.next;
-//        node.next = new ListNode(4);
-//        node = node.next;
-//        node.next = new ListNode(5);
-        removeNthFromEnd1(node,1);
+        node.next = new ListNode(2);
+        node = node.next;
+        node.next = new ListNode(3);
+        node = node.next;
+        node.next = new ListNode(4);
+        node = node.next;
+        node.next = new ListNode(5);
+        removeNthFromEnd1(node,2);
     }
     public static ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode fakehead = new ListNode();
