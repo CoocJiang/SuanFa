@@ -6,7 +6,7 @@ public class no438 {
 
 
     public static void main(String[] args) {
-        findAnagrams("abab","ab").forEach(System.out::println);
+        findAnagrams1("abab","ab").forEach(System.out::println);
     }
     public  static List<Integer> findAnagrams(String s, String p) {
         if (p.length()<s.length()){
@@ -46,4 +46,38 @@ public class no438 {
         }
         return true;
     }
+
+
+    public static List<Integer> findAnagrams1(String s, String p) {
+        int [] map = new int [26];
+        List<Integer> result = new ArrayList<>();
+        int valid = 0;
+        for (char c:p.toCharArray()){
+            map[c-'a']++;
+            valid++;
+        }
+        int left = 0;
+        int right = 0;
+        int len = s.length();
+        while (right<len){
+            if (right-left<p.length()){
+                if (map[s.charAt(right)-'a']>0){
+                    valid--;
+                }
+                map[s.charAt(right)-'a']--;
+                if (valid==0){
+                    result.add(left);
+                }
+                right++;
+            }else {
+                if (map[s.charAt(left)-'a']>=0){
+                    valid++;
+                }
+                map[s.charAt(left)-'a']++;
+                left++;
+            }
+        }
+        return result;
+    }
+
 }

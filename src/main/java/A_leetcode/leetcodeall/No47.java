@@ -15,9 +15,9 @@ public class No47 {
             System.out.println();
         }
     }
-    static List<List<Integer>> res = new ArrayList<>();
 
-    public static List<List<Integer>> permuteUnique(int[] nums) {
+
+    public static List<List<Integer>> permuteUnique1(int[] nums) {
         res.clear();
         List<Integer> list = new ArrayList<>();
         List<Integer> ans  = new ArrayList<>();
@@ -29,7 +29,6 @@ public class No47 {
         if (list.size()==nums.length){
             res.add(new ArrayList<>(ans));
         }else {
-            int size = list.size();
             HashSet<Integer> set = new HashSet<>();
             for (int i = 0;i<nums.length;i++){
                if (!list.contains(i)&&!set.contains(nums[i])){
@@ -44,4 +43,31 @@ public class No47 {
         }
     }
 
+    static List<List<Integer>> res = new ArrayList<>();
+    static boolean[] visited;
+    public static List<List<Integer>> permuteUnique(int[] nums) {
+        res.clear();
+        visited = new boolean[nums.length];
+        Arrays.sort(nums);
+        dfs(nums,new ArrayList<>());
+        return res;
+    }
+
+    public static void dfs(int[] nums,List<Integer> onPath){
+        if (onPath.size()==nums.length){
+            res.add(new ArrayList<>(onPath));
+        }else {
+            HashSet<Integer> set = new HashSet<>();
+            for (int i = 0;i<nums.length;i++){
+                if (!visited[i]&&!set.contains(nums[i])){
+                    visited[i]=true;
+                    onPath.add(nums[i]);
+                    set.add(nums[i]);
+                    dfs(nums,onPath);
+                    onPath.remove(onPath.size()-1);
+                    visited[i]=false;
+                }
+            }
+        }
+    }
 }

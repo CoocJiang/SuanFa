@@ -8,10 +8,10 @@ public class NO3 {
     public static void main(String[] args) {
         String s = "bbtablud";
 
-        System.out.println(lengthOfLongestSubstring1(s));
+        System.out.println(lengthOfLongestSubstring(s));
     }
 
-    public static int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring2(String s) {
         char[] chars = s.toCharArray();
         int max= 0;
         Queue<Character> deque = new LinkedList<>();
@@ -48,6 +48,27 @@ public class NO3 {
             }else{
                 HashSet.add(chars[right++]);
                 ans = Math.max(ans,HashSet.size());
+            }
+        }
+        return ans;
+    }
+
+    public static int lengthOfLongestSubstring(String s) {
+        char[] charArray = s.toCharArray();
+        int left = 0;
+        int right = 0;
+        int ans = 0;
+        int length = s.length();
+        HashSet<Character> set = new HashSet<>();
+        while(right<length){
+            if (!set.contains(charArray[right])){
+                set.add(charArray[right++]);
+                ans = Math.max(ans,right-left);
+            }else {
+                while(charArray[left]!=charArray[right]){
+                    set.remove(charArray[left++]);
+                }
+                set.remove(charArray[left++]);
             }
         }
         return ans;

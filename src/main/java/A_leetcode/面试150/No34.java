@@ -3,8 +3,8 @@ package A_leetcode.面试150;
 public class No34 {
 
     public static void main(String[] args) {
-        int [] nums = {1,2,3};
-        System.out.println(searchRange(nums, 1));
+        int [] nums = {2,2};
+        System.out.println(searchRange3(nums,1));
     }
 
 
@@ -133,5 +133,46 @@ public class No34 {
             return new int[]{-1,-1};
         }
         return new int[]{left,right};
+    }
+
+
+    public static int[] searchRange3(int[] nums, int target) {
+        int[] ans = new int[2];
+        ans[0] = -1;
+        ans[1] = -1;
+        int length = nums.length;
+        if (length < 1) return ans;
+        int right = length - 1;
+        int left = 0;
+        while (left <= right) {
+            int mid = (left + right) >>> 1;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        if(left-1>=0){
+            ans[1] = nums[left - 1] == target ? left - 1 : -1;
+        }
+        right = length - 1;
+        left = 0;
+        while (left <= right) {
+            int mid = (left + right) >>> 1;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        if (right+1<length){
+            ans[0] = nums[right + 1] == target ? right + 1 : -1;
+        }
+        return ans;
     }
 }

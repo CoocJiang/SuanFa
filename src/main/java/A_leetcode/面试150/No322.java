@@ -1,12 +1,14 @@
 package A_leetcode.面试150;
 
+import java.util.Arrays;
+
 public class No322 {
 //    给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
 //    计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。
 //    你可以认为每种硬币的数量是无限的。
     public static void main(String[] args) {
-        int [] coins = {2};
-        System.out.println(coinChange2(coins,3));
+        int [] coins = {1,2,5};
+        System.out.println(coinChange3(coins,11));
     }
 
     static class nums{
@@ -70,5 +72,47 @@ public class No322 {
             }
         }
         return dp[0][amount]==Integer.MAX_VALUE ? -1:dp[0][amount];
+    }
+
+    static int[][] memo = new int[10001][13];
+
+    public static int coinChange3(int[] coins, int amount) {
+        int len = coins.length;
+        for (int j = 0; j <= amount; j++) {
+            if (j % coins[len - 1] == 0) {
+                memo[j][len - 1] = j / coins[len - 1];
+            } else {
+                memo[j][len - 1] = Integer.MAX_VALUE;
+            }
+        }
+        for (int i = len - 2; i >= 0; i--) {
+            for (int j = 0; j <= amount; j++) {
+                int ans = Integer.MAX_VALUE;
+                for (int k = 0;k * coins[i] <= j; k++) {
+                    if (memo[j-k*coins[i]][i+1]!=Integer.MAX_VALUE) {
+                        ans = Math.min(ans,k+memo[j-k*coins[i]][i+1]);
+                    }else{
+                        ans = Math.min(ans,Integer.MAX_VALUE);
+                    }
+                }
+                memo[j][i] = ans;
+            }
+        }
+        return memo[amount][0];
+    }
+
+    public static int process(int[] coins, int index,int target) {
+        if (target==0) return 0;
+        if (index==coins.length) return Integer.MAX_VALUE;
+        if (memo[target][index]!=-1) return memo[target][index];
+        int ans = Integer.MAX_VALUE;
+        for (int i = 0;i*coins[index]<=target;i++){
+            int cnts = process(coins,index+1,target-i*coins[index]);
+            if (cnts != Integer.MAX_VALUE) {
+                ans = Math.min(i+cnts,ans);
+            }
+        }
+        if (memo[target][index] ==-1) memo[target][index] = ans;
+        return ans;
     }
 }
